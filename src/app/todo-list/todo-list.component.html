@@ -1,7 +1,3 @@
-<div>
-  <input type="text" placeholder="Add Todo" ngModel name="title">
-  <button (click)="addTodo()">Add</button>
-</div>
-<div *ngFor="let todo of todos">
-  <app-todo-item [todo]="todo" (delete)="deleteTodo($event)" (toggle)="toggleCompleted($event)"></app-todo-item>
+<div *ngFor="let dailyTodo of dailyTodos" class="flex flex-col justify-center items-center p-4 w-full">
+  <app-todo-item [dailyTodo]="dailyTodo"></app-todo-item>
 </div>

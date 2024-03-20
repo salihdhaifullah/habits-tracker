@@ -1,22 +1,32 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Todo } from '../todo';
+import { Component, Input } from '@angular/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { NgIf } from '@angular/common';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { DailyTodo, Todo, icons } from '../db.service';
+import { DataService } from '../data.service';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 
 @Component({
   standalone: true,
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
-  styleUrls: ['./todo-item.component.css']
+  imports: [MatCheckboxModule,  FontAwesomeModule, NgIf]
 })
-export class TodoItemComponent {
-  @Input() todo!: Todo;
-  @Output() delete: EventEmitter<Todo> = new EventEmitter();
-  @Output() toggle: EventEmitter<Todo> = new EventEmitter();
 
-  toggleCompleted() {
-    this.toggle.emit(this.todo);
+export class TodoItemComponent {
+  data!: DataService;
+  @Input() dailyTodo!: DailyTodo;
+  todo!: Todo;
+  icon!: IconDefinition;
+  isLoading = true;
+
+  constructor(data: DataService) {
+    this.data = data;
   }
 
-  deleteTodo() {
-    this.delete.emit(this.todo);
+  async ngOnInit() {
+    this.todo = await this.data.getTodo(this.dailyTodo.todoId)
+    this.icon = icons[this.todo.icon]
+    this.isLoading = false 
   }
 }
