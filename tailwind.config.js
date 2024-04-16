@@ -1,14 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.tsx", "./components/**/*.tsx"],
+  content: ["./src/**/*.tsx", "./App.tsx"],
   theme: {
     extend: {
       colors: {
-        "primary": "#0891b2",
-        "secondary": "",
+        "primary": "#4ade80",
+        "secondary": "#1e293b",
         "title": "#e5e7eb",
-        "body": "#9ca3af",
-        "background": "black",
+        "body": "#9ca3af"
       }
     },
   },

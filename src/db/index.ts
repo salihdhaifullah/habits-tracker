@@ -1,35 +1,7 @@
-import { FontAwesome } from "@expo/vector-icons";
 import * as SQLite from "expo-sqlite";
-import { getSqlLiteDate, getWeekDay } from "../utils";
+import { FontAwesome6Icon, Unit, WeekDays, getSqlLiteDate, getWeekDay, weekDays } from "../utils";
 
 const db = SQLite.openDatabase("db.db");
-
-export enum WeekDays {
-    Sunday,
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday
-}
-
-export enum Unit {
-    Time,
-    Count,
-    Binary
-}
-
-export const weekDays: WeekDays[] = [
-    WeekDays.Sunday,
-    WeekDays.Monday,
-    WeekDays.Tuesday,
-    WeekDays.Wednesday,
-    WeekDays.Thursday,
-    WeekDays.Friday,
-    WeekDays.Saturday
-]
-
 
 const DBModel = `
 CREATE TABLE IF NOT EXISTS WeekDays (
@@ -43,7 +15,6 @@ CREATE TABLE IF NOT EXISTS Habits (
     icon TEXT NOT NULL,
     unit TEXT NOT NULL, -- time, count, or yes & no
     amount INTEGER NOT NULL, -- the minimum amount in (time, count, binary) if good habit and the maximum if bad habit
-    isGood INTEGER NOT NULL,
     points INTEGER NOT NULL,
     createdAt INTEGER NOT NULL,
     description TEXT
@@ -75,15 +46,14 @@ CREATE TABLE IF NOT EXISTS HabitDays (
 
 export class Habit {
     name: string;
-    icon: React.ComponentProps<typeof FontAwesome>['name'];
+    icon: FontAwesome6Icon;
     points: number;
     days: WeekDays[];
     description: string | null;
     unit: Unit;
     amount: number;
-    isGood: boolean;
 
-    constructor(name: string, icon: React.ComponentProps<typeof FontAwesome>['name'], points: number, days: WeekDays[], unit: Unit, amount: number, isGood: boolean, description: string | null) {
+    constructor(name: string, icon: FontAwesome6Icon, points: number, days: WeekDays[], unit: Unit, amount: number, description: string | null) {
         this.name = name
         this.icon = icon
         this.points = points
@@ -91,7 +61,6 @@ export class Habit {
         this.description = description
         this.unit = unit
         this.amount = amount
-        this.isGood = isGood
     }
 
     public create(tx: SQLite.SQLTransaction) {
@@ -104,8 +73,8 @@ export class Habit {
         })
 
         tx.executeSql(
-            `INSERT INTO Habits (name, icon, order, points, createdAt, description, unit, amount, isGood) VALUES (?,?,?,?, ?,?,?,?, ?)`,
-            [this.name, this.icon, maxOrder + 1, this.points, getSqlLiteDate(), this.description, this.unit, this.amount, this.isGood ? 1 : 0],
+            `INSERT INTO Habits (name, icon, order, points, createdAt, description, unit, amount) VALUES (?,?,?,?, ?,?,?,?)`,
+            [this.name, this.icon, maxOrder + 1, this.points, getSqlLiteDate(), this.description, this.unit, this.amount],
             (_, res) => { habitId = res.insertId }
         )
 
@@ -136,7 +105,7 @@ const initTodayHabits = (tx: SQLite.SQLTransaction) => {
     )
 
 
-    // get all HabitWeekDays  where week day equal to today week day
+    // get all HabitWeekDays where week day equal to today week day
     // check on by one if we created the habit day
     // if not then create them
 } 
