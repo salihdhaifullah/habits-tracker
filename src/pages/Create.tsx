@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
-import { Button, NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Animated, Button, NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { Unit, WeekDays, weekDays } from '../utils';
 import { FontAwesome6 } from '@expo/vector-icons';
 import icons from '../db/icons';
@@ -20,8 +20,13 @@ const Create = () => {
         new Habit(name, icon, points, weekDays, unit, amount, null)
     }, [])
 
+
+    useEffect(() => {
+        console.log(name)
+    }, [name])
+
     return (
-        <View className='flex flex-1 '>
+        <View className='flex-1'>
             {/* TODO: use reactnative modal and anmation
             <SelectIcon setState={setIcon} />
 
@@ -168,7 +173,7 @@ const SelectAmount = (props: { setState: (icon: number) => void, unit: Unit }) =
 
 
 
-const arrayFrom = (min: number, max: number) => {
+const arrayFrom = (min: number, max: number): string[] => {
     const data = [];
     for (let i = min; i <= max; i++) {
         if (i < 10) {
@@ -186,82 +191,61 @@ const arrayFrom = (min: number, max: number) => {
 const TimePicker = (props: { setState: (number: number) => void }) => {
     const [selectedHour, setSelectedHour] = useState('00');
     const [selectedMinute, setSelectedMinute] = useState('00');
-    const hours = arrayFrom(1, 24);
-    const minutes = arrayFrom(1, 60);
+    const [selectedSecond, setSelectedSecond] = useState('00');
+    const hours = arrayFrom(0, 24);
+    const minutes = arrayFrom(0, 59);
+    const seconds = arrayFrom(0, 59);
+    const ITEM_HEIGHT = 64;
 
-    const handleHourSelection = (hour: string) => {
-        setSelectedHour(hour);
-    };
-
-    const handleMinuteSelection = (minute: string) => {
-        setSelectedMinute(minute);
-    };
-
-    useEffect(() => {
-        props.setState((Number(selectedHour) * 60) + Number(selectedMinute))
-    }, [selectedHour, selectedMinute])
-
-    const elementPositionsRef = React.useRef<number[]>([]);
 
     return (
-        <View className='flex-1 w-full items-center gap-4 justify-center flex-row'>
-            <ScrollView
-                contentContainerStyle={{ alignItems: "center", justifyContent: "center", paddingVertical: 8 }}
-                className='!h-[180px] max-w-[60px] border-white border-[3px] !p-0 rounded-md flex'
-                onScroll={(event) => {
-                    // console.log(`\nval: ${event.nativeEvent.contentOffset.y.toFixed(0)},\n calc1: ${event.nativeEvent.contentOffset.y/53},\n calc2: ${event.nativeEvent.contentOffset.y/24}`);
-                    const ele = Math.round((event.nativeEvent.contentOffset.y+60)/60)-1;
-                    console.log(ele);
-                    setSelectedHour(hours[ele])
-                }}
-                scrollEventThrottle={16}
-                showsVerticalScrollIndicator={false}
-            >
-                {hours.map((hour, index) => (
-                    <TouchableOpacity
-                        key={hour}
-                        onPress={() => handleHourSelection(hour)}
-                        className='!h-[40px] !my-[10px] flex justify-center items-center'
-                        onLayout={(e) => {
-                            let data = {}
-                            console.log(`hour: ${hour}, position: ${e.nativeEvent.layout.y}, x: ${e.currentTarget.measure((x, y, w, h, pX, pY) => {
-                                data = { x, y, w, h, pX, pY };
-                                console.log(data);
-                            })}`)
-
-                            elementPositionsRef.current[index] = e.nativeEvent.layout.y;
-                        }}
-                        style={[
-                            { opacity: selectedHour === hour ? 1 : 0.5 },
-                        ]}
-                    >
-                        <Text className={selectedHour === hour ? "text-3xl" : "text-xl"}>{hour}</Text>
-                    </TouchableOpacity>
-                ))}
-
-                <TouchableOpacity className='!h-[120px] flex justify-center items-center'>
-                </TouchableOpacity>
-
-            </ScrollView>
-
-            <ScrollView
-                contentContainerStyle={{ alignItems: "center", justifyContent: "center", paddingVertical: 8 }}
-                className='h-36 max-w-[60px] border-white border-[3px] rounded-md flex'
-                showsVerticalScrollIndicator={false}
-            >
-                {minutes.map((minute, index) => (
-                    <TouchableOpacity
-                        key={minute}
-                        onPress={() => handleMinuteSelection(minute)}
-                        style={[
-                            { opacity: selectedMinute === minute ? 1 : 0.5 },
-                        ]}
-                    >
-                        <Text className='text-xl'>{minute}</Text>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
+        <View className='items-center flex-row flex w-full justify-evenly bg-white py-4 rounded-md shadow-2xl'>
+            <SlotMachine items={hours} value={selectedHour} setValue={setSelectedHour} label='hours' height={ITEM_HEIGHT} />
+            <SlotMachine items={minutes} value={selectedMinute} setValue={setSelectedMinute} label='minutes' height={ITEM_HEIGHT} />
+            <SlotMachine items={seconds} value={selectedSecond} setValue={setSelectedSecond} label='seconds' height={ITEM_HEIGHT} />
         </View>
     );
 };
 
+
+
+interface SlotMachineProps {
+    items: string[];
+    height: number;
+    label: string;
+    setValue: (s: string) => void;
+    value: string;
+}
+
+const SlotMachine = ({items, height, label, value, setValue}: SlotMachineProps) => {
+    const scrollView = useRef<ScrollView>(null);
+    const [optionIndex, setOptionIndex] = useState(items.indexOf(value));
+
+    return (
+        <View className='justify-center flex items-center'>
+            <Text className='text-primary text-lg mb-1'>{label}</Text>
+            <ScrollView
+                onScroll={e => {
+                    let val = 0;
+                    if (e.nativeEvent.contentOffset.y > 0) val = Math.round(e.nativeEvent.contentOffset.y / height)
+                    setOptionIndex(val);
+                    setValue(items[val]);
+                }}
+                onMomentumScrollEnd={() => {
+                    if (scrollView.current) scrollView.current.scrollTo({ y: height * optionIndex, animated: true })
+                }}
+                showsVerticalScrollIndicator={false}
+                ref={scrollView}
+                style={{height: height*3}}
+                className='px-4 bg-green-300 shadow-lg w-20 border-white border-2 rounded-md'>
+                <View style={{height}} />
+                {items.map((item, index) => (
+                    <View key={index} style={{height}} className="w-full justify-center items-center">
+                        <Text className={`text-lg text-gray-900 ${optionIndex === index ? "font-extrabold text-xl" : "opacity-75"}`}>{item}</Text>
+                    </View>
+                ))}
+                <View style={{height}} />
+            </ScrollView>
+        </View>
+    );
+};
