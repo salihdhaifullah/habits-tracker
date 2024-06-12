@@ -10,10 +10,10 @@ export enum WeekDays {
     Saturday
 }
 
-export enum Unit {
-    Time,
-    Count,
-    Binary
+export enum Priority {
+    low,
+    mid,
+    high
 }
 
 export const weekDays: WeekDays[] = [
@@ -25,17 +25,6 @@ export const weekDays: WeekDays[] = [
     WeekDays.Friday,
     WeekDays.Saturday
 ]
-
-const WeekDaysStringMap: { [key: string]: WeekDays } = {
-    'Sunday': WeekDays.Sunday,
-    'Monday': WeekDays.Monday,
-    'Tuesday': WeekDays.Tuesday,
-    'Wednesday': WeekDays.Wednesday,
-    'Thursday': WeekDays.Thursday,
-    'Friday': WeekDays.Friday,
-    'Saturday': WeekDays.Saturday
-};
-
 
 export const getDaysSinceEpoch = () => {
     const timeDifference = new Date().getTime() - new Date(0).getTime();

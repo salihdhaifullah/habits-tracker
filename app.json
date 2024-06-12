@@ -1,8 +1,7 @@
 {
   "expo": {
-    "name": "habitup",
-    "slug": "habitup",
-    "scheme": "habitup",
+    "name": "expo-new",
+    "slug": "expo-new",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,11 +11,22 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.salihdhaifullah.habitup"
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "43ff59fb-4297-4363-9bd6-fde0cd049276"
       }
     }
   }

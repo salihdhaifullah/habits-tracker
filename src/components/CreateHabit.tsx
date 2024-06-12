@@ -27,7 +27,7 @@ const CreateHabit = () => {
             <SelectComponent 
               label="Select a fruit"
               options={['Apple', 'Banana', 'Orange', 'Mango']}
-              onSelect={(value) => console.log('Selected fruit:', value)}
+              onSelect={(value: string) => console.log('Selected fruit:', value)}
             />
             <Button
                 title="Login"

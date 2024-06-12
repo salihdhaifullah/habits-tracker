@@ -1,31 +1,33 @@
 {
-  "name": "habitup",
+  "name": "expo-new",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/datetimepicker": "^8.0.0",
-    "@types/react": "~18.2.45",
-    "expo": "~50.0.14",
-    "expo-sqlite": "^13.4.0",
-    "expo-status-bar": "~1.11.1",
+    "expo": "~51.0.12",
+    "expo-sqlite": "~14.0.3",
+    "expo-status-bar": "~1.12.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
-    "react-native": "0.73.6",
-    "typescript": "^5.3.0"
+    "react-native": "0.74.2",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native-community/eslint-config": "^3.2.0",
-    "@typescript-eslint/eslint-plugin": "^7.4.0",
-    "@typescript-eslint/parser": "^7.4.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "tailwindcss": "3.3.2"
+    "@types/react": "^18.3.3",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "eslint": "^9.4.0",
+    "eslint-plugin-react": "^7.34.2",
+    "tailwindcss": "3.3.2",
+    "typescript": "^5.4.5"
   },
   "private": true
 }

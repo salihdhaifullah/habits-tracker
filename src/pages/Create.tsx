@@ -1,63 +1,55 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Button, NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-import { Unit, WeekDays, weekDays } from '../utils';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { Modal, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { WeekDays, weekDays } from '../utils';
 import { FontAwesome6 } from '@expo/vector-icons';
 import icons from '../db/icons';
 import { FontAwesome6Icon } from '../utils';
 import React from 'react';
-import { Habit } from '../db';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import Button from '../components/Button';
 
 const Create = () => {
-    const [name, setName] = useState("");
+    const [title, setTitle] = useState("");
     const [points, setPoints] = useState(10);
     const [icon, setIcon] = useState<FontAwesome6Icon>(icons[0]);
     const [weekDays, setWeekDays] = useState<WeekDays[]>([]);
-    const [unit, setUnit] = useState(Unit.Binary);
-    const [amount, setAmount] = useState(1);
 
-    const create = useCallback(() => {
-        new Habit(name, icon, points, weekDays, unit, amount, null)
-    }, [])
-
-
-    useEffect(() => {
-        console.log(name)
-    }, [name])
 
     return (
-        <View className='flex-1'>
-            {/* TODO: use reactnative modal and anmation
-            <SelectIcon setState={setIcon} />
+        <View className='flex-1 justify-center items-center'>
+            <View className='bg-white p-4 rounded-md gap-2'>
+                {/* TO-DO: use react native modal and animation */}
+                <SelectIcon setState={setIcon} />
 
-            {/* use custom nice desgin for text input */}
-            {/* <TextInput
-                style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
-                placeholder="Enter text..."
-                onChangeText={setName}
-                value={name}
-            /> */}
+                {/* use custom nice design for text input */}
+                <TextInput
+                    style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
+                    placeholder="Enter text..."
+                    onChangeText={setTitle}
+                    value={title}
+                />
 
-            {/* use number input like the web */}
-            {/* <TextInput
-                style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
-                placeholder="Enter number..."
-                keyboardType="numeric"
-                onChangeText={(e) => setPoints(Number(e))}
-                value={points.toString()}
-            /> */}
+                {/* use number input like the web */}
+                <TextInput
+                    style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
+                    placeholder="Enter number..."
+                    keyboardType="numeric"
+                    onChangeText={(e) => setPoints(Number(e))}
+                    value={points.toString()}
+                />
 
-            {/* TODO: use reactnative modal and anmation and better desgin */}
-            {/* <SelectWeekDays setState={setWeekDays} /> */}
-
-            {/* TODO: use reactnative modal and anmation and better desgin */}
-            {/* <SelectUnit setState={setUnit} /> */}
-
-            {/* TODO: use reactnative modal and anmation and better desgin */}
-            {/* <SelectAmount setState={setAmount} unit={unit} />  */}
+                {/* TO-DO: use react native modal and animation and better design */}
+                <SelectWeekDays setState={setWeekDays} />
 
 
-            <TimePicker setState={setAmount} />
+                <View className='flex flex-row justify-evenly'>
+                    <Button>
+                        <Text>create</Text>
+                    </Button>
+                    <Button>
+                        <Text>cancel</Text>
+                    </Button>
+                </View>
+            </View>
         </View>
     )
 }
@@ -67,57 +59,63 @@ export default Create;
 
 
 
+
+
+
+
 const SelectIcon = (props: { setState: (icon: FontAwesome6Icon) => void }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const handelSelect = useCallback((icons: FontAwesome6Icon) => {
-        props.setState(icons)
-        setIsOpen(false)
-    }, [])
+    const [activeIcon, setActiveIcon] = useState(null);
 
-    return isOpen ? (
-        <View className='absolute top-0 left-0 w-screen h-screen'>
-            <ScrollView>
-                <View className='flex flex-row gap-y-4 flex-wrap justify-between w-full'>
-                    {icons.map((item, index) => (
-                        <Pressable onPress={() => handelSelect(item)} className='p-2 w-20 bg-white rounded-md flex justify-center items-center text-primary shadow-md' key={index}>
-                            <FontAwesome6 name={item} size={34} />
-                        </Pressable>
-                    ))}
+
+    return (
+        <>
+            <Modal
+                animationType="slide"
+                visible={isOpen}
+                onRequestClose={() => {
+                    setIsOpen(false);
+                    setActiveIcon(null);
+                }}
+                className='bg-primary'>
+
+                <View className='p-2 w-full flex-row justify-between items-center'>
+                    <Button onPress={() => setIsOpen(false)}>
+                        <Text>Cancel</Text>
+                    </Button>
+
+                    <Button disabled={activeIcon === null} onPress={() => {
+                        props.setState(activeIcon)
+                        setIsOpen(false)
+                    }}>
+                        <Text>Done</Text>
+                    </Button>
                 </View>
-            </ScrollView>
-        </View>
-    ) : (
-        <Button onPress={() => setIsOpen(true)} title='Select Icon' />
+
+                <ScrollView>
+                    <View className='flex flex-row gap-y-4 flex-wrap justify-between py-10 px-2 w-full bg-primary'>
+                        {icons.map((item, index) => (
+                            <Pressable
+                                onPress={() => setActiveIcon(item)}
+                                className='p-2 w-20 bg-white rounded-md border-2 flex justify-center items-center'
+                                key={index}
+                                style={activeIcon !== item ? null : { backgroundColor: "rgb(74, 222, 128)" }}
+                            >
+                                <FontAwesome6 name={item} size={34} />
+                            </Pressable>
+                        ))}
+                    </View>
+                </ScrollView>
+
+            </Modal>
+
+            <Button onPress={() => setIsOpen(true)}>
+                <Text>Select Icon</Text>
+            </Button>
+        </>
     );
 }
 
-const SelectUnit = (props: { setState: (icon: Unit) => void }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const handelSelect = useCallback((icons: Unit) => {
-        props.setState(icons)
-        setIsOpen(false)
-    }, [])
-
-    return isOpen ? (
-        <View className='absolute top-0 left-0 w-screen h-screen'>
-            <View className='flex flex-row gap-y-4 flex-wrap justify-between w-full'>
-                <Pressable onPress={() => handelSelect(Unit.Binary)} className='p-2 w-full bg-white text-primary'>
-                    <Text>Yes or No</Text>
-                </Pressable>
-
-                <Pressable onPress={() => handelSelect(Unit.Count)} className='p-2 w-full bg-white text-primary'>
-                    <Text>With Numeric Value</Text>
-                </Pressable>
-
-                <Pressable onPress={() => handelSelect(Unit.Time)} className='p-2 w-full bg-white text-primary'>
-                    <Text>With Time</Text>
-                </Pressable>
-            </View>
-        </View>
-    ) : (
-        <Button onPress={() => setIsOpen(true)} title='Unit Of measurement' />
-    );
-}
 
 const SelectWeekDays = (props: { setState: Dispatch<SetStateAction<WeekDays[]>> }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -126,126 +124,36 @@ const SelectWeekDays = (props: { setState: Dispatch<SetStateAction<WeekDays[]>> 
         setIsOpen(false)
     }, [])
 
-    return isOpen ? (
-        <View className='absolute top-0 left-0 w-screen h-screen'>
-            <View className='flex flex-row gap-y-4 flex-wrap justify-between w-full'>
-                {weekDays.map((item, index) => (
-                    <Pressable onPress={() => handelSelect(item)} className='p-2 w-full bg-white rounded-md flex justify-center items-center text-primary shadow-md' key={index}>
-                        <Text>{WeekDays[item]}</Text>
-                    </Pressable>
-                ))}
-            </View>
-        </View>
-    ) : (
-        <Button onPress={() => setIsOpen(true)} title='Select WeekDays' />
-    );
-}
-
-
-const SelectAmount = (props: { setState: (icon: number) => void, unit: Unit }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handelSelect = useCallback((icons: number) => {
-        props.setState(icons)
-        setIsOpen(false)
-    }, [])
-
-    return isOpen ? (
-        <View className='absolute top-0 left-0 w-screen h-screen'>
-            <View className='flex flex-row gap-y-4 flex-wrap justify-between w-full'>
-                {Unit.Count ? (
-                    <TextInput
-                        style={{ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
-                        placeholder="Enter number..."
-                        keyboardType="numeric"
-                        onChangeText={(e) => props.setState(Number(e))}
-                        value={"1"}
-                    />
-                ) : (
-                    <TimePicker setState={handelSelect} />
-                )}
-            </View>
-        </View>
-    ) : props.unit === Unit.Binary ? null : (
-        <Button onPress={() => setIsOpen(true)} title='Amount' />
-    );
-}
-
-
-
-const arrayFrom = (min: number, max: number): string[] => {
-    const data = [];
-    for (let i = min; i <= max; i++) {
-        if (i < 10) {
-            data.push(`0${i}`);
-        } else {
-            data.push(i.toString());
-        }
-    }
-
-    return data;
-}
-
-
-
-const TimePicker = (props: { setState: (number: number) => void }) => {
-    const [selectedHour, setSelectedHour] = useState('00');
-    const [selectedMinute, setSelectedMinute] = useState('00');
-    const [selectedSecond, setSelectedSecond] = useState('00');
-    const hours = arrayFrom(0, 24);
-    const minutes = arrayFrom(0, 59);
-    const seconds = arrayFrom(0, 59);
-    const ITEM_HEIGHT = 64;
-
-
     return (
-        <View className='items-center flex-row flex w-full justify-evenly bg-white py-4 rounded-md shadow-2xl'>
-            <SlotMachine items={hours} value={selectedHour} setValue={setSelectedHour} label='hours' height={ITEM_HEIGHT} />
-            <SlotMachine items={minutes} value={selectedMinute} setValue={setSelectedMinute} label='minutes' height={ITEM_HEIGHT} />
-            <SlotMachine items={seconds} value={selectedSecond} setValue={setSelectedSecond} label='seconds' height={ITEM_HEIGHT} />
-        </View>
-    );
-};
+        <>
+            <Modal
+                animationType="slide"
+                visible={isOpen}
+                onRequestClose={() => {
+                    setIsOpen(false);
+                }}
+                className='bg-primary'>
+                <View className='w-full bg-white flex-row justify-between p-2 '>
+                    <Button onPress={() => setIsOpen(false)}>
+                        <Text>Cancel</Text>
+                    </Button>
 
+                    <Button onPress={() => setIsOpen(false)}>
+                        <Text>Done</Text>
+                    </Button>
+                </View>
 
-
-interface SlotMachineProps {
-    items: string[];
-    height: number;
-    label: string;
-    setValue: (s: string) => void;
-    value: string;
+                <View className='flex flex-row gap-y-4 flex-wrap justify-between w-full'>
+                    {weekDays.map((item, index) => (
+                        <TouchableOpacity onPress={() => handelSelect(item)} className='p-2 w-fit bg-yellow-600 m-2 rounded-2xl' key={index}>
+                            <Text>{WeekDays[item]}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            </Modal>
+            <Button onPress={() => setIsOpen(true)}>
+                <Text>Select Weekdays</Text>
+            </Button>
+        </>
+    )
 }
-
-const SlotMachine = ({items, height, label, value, setValue}: SlotMachineProps) => {
-    const scrollView = useRef<ScrollView>(null);
-    const [optionIndex, setOptionIndex] = useState(items.indexOf(value));
-
-    return (
-        <View className='justify-center flex items-center'>
-            <Text className='text-primary text-lg mb-1'>{label}</Text>
-            <ScrollView
-                onScroll={e => {
-                    let val = 0;
-                    if (e.nativeEvent.contentOffset.y > 0) val = Math.round(e.nativeEvent.contentOffset.y / height)
-                    setOptionIndex(val);
-                    setValue(items[val]);
-                }}
-                onMomentumScrollEnd={() => {
-                    if (scrollView.current) scrollView.current.scrollTo({ y: height * optionIndex, animated: true })
-                }}
-                showsVerticalScrollIndicator={false}
-                ref={scrollView}
-                style={{height: height*3}}
-                className='px-4 bg-green-300 shadow-lg w-20 border-white border-2 rounded-md'>
-                <View style={{height}} />
-                {items.map((item, index) => (
-                    <View key={index} style={{height}} className="w-full justify-center items-center">
-                        <Text className={`text-lg text-gray-900 ${optionIndex === index ? "font-extrabold text-xl" : "opacity-75"}`}>{item}</Text>
-                    </View>
-                ))}
-                <View style={{height}} />
-            </ScrollView>
-        </View>
-    );
-};
