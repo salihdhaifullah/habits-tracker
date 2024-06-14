@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Text } from "react-native";
+import { Pressable, Text } from "react-native";
 import { useRouterContext } from "../context/Router";
-import Link from "./Link";
 
 interface ITapProps {
     link: string;
@@ -13,17 +12,16 @@ export default function Tap(props: ITapProps) {
     const router = useRouterContext()
 
     return (
-        <Link
-            to={props.link}
+        <Pressable
+            className={"p-2 bg-gray rounded-md transition-all " + (isPressed ? 'bg-white' : (router.value !== props.link ? 'bg-gray' : 'bg-pink'))}
+            onPress={() => router.updateValue(props.link)}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}
-            className={`p-2 
-                ${isPressed ? "bg-slate-400" : "bg-gray-100"} 
-                ${router.value !== props.link ? "" : "bg-pink-400"}
-                transition-all rounded-md text-primary text-base`}
         >
-            <Text>{props.text}</Text>
-        </Link>
+            <Text className="!text-dark text-base">
+                {props.text}
+            </Text>
+        </Pressable>
     )
 }
 

@@ -10,7 +10,6 @@ interface ICreateHabit {
     startTime: string;
     endTime: string;
     points: number;
-    last_check: number;
     repeat: WeekDays[];
     icon?: string;
     description?: string;

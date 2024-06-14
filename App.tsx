@@ -11,6 +11,10 @@ import Create from './src/pages/Create';
 import Index from './src/pages/Index';
 import Footer from './src/components/layout/Footer';
 
+// import { NativeWindStyleSheet } from "nativewind";
+//
+// NativeWindStyleSheet.setOutput({ default: "native" });
+
 export default function App() {
   const [loaded, error] = useFonts({
     SpaceMono: require('./assets/fonts/SpaceMono-Regular.ttf'),
@@ -24,11 +28,6 @@ export default function App() {
     return null;
   }
 
-  // ToastAndroid.showWithGravity(
-  //   "Welcome!', 'This is your first open today",
-  //   ToastAndroid.SHORT,
-  //   ToastAndroid.BOTTOM
-  // );
 
   return (
     <View className='flex-1 bg-primary' style={{marginTop: constants.statusBarHeight}}>
