@@ -1,0 +1,16 @@
+<div *ngIf="!isLoading" class="flex items-center justify-between w-[30rem] p-4 border-b border-gray-300">
+  <div>
+      <div class="flex flex-row justify-center items-center gap-2">
+          <fa-icon [icon]="icon"></fa-icon>
+          <h3 class="text-lg font-semibold" [class.text-black]="!dailyTodo.completed" [class.line-through.text-gray-500]="dailyTodo.completed">
+              {{ todo.title }}
+          </h3>
+      </div>
+      <p class="text-sm text-gray-600">{{ todo.points }} points</p>
+  </div>
+  <button (click)="data.toggleTodo(dailyTodo)" class="ml-4 px-4 py-2 rounded"
+          [class.bg-gray-300.text-gray-600]="dailyTodo.completed" [class.bg-blue-500.text-white]="!dailyTodo.completed">
+      {{ dailyTodo.completed ? 'Undo' : 'Complete' }}
+  </button>
+</div>
+<div *ngIf="isLoading">loading...</div>
