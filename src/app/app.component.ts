@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TodoListComponent, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './app.component.html'
 })
 
 export class AppComponent {
-  title = 'habits-tracker';
+  title = 'my-app';
 }
