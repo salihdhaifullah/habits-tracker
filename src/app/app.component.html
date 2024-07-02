@@ -1,6 +1,17 @@
-<nav>
-    <a class="text-xl text-fuchsia-600 hover:underline cursor-pointer ml-2" routerLink="/stats">Stats</a>
-    <a class="text-xl text-fuchsia-600 hover:underline cursor-pointer ml-2" routerLink="/tasks">Tasks</a>
-    <a class="text-xl text-fuchsia-600 hover:underline cursor-pointer ml-2" routerLink="/">Home</a>
+<nav class="flex  w-full justify-evenly py-10">
+    <button mat-raised-button #tooltip="matTooltip" matTooltip="go to home">
+        <a routerLink="/">Home</a>
+    </button>
+
+    <button mat-raised-button #tooltip="matTooltip" matTooltip="go to Tasks">
+        <a routerLink="/tasks">Tasks</a>
+    </button>
+
+    <button mat-raised-button #tooltip="matTooltip" matTooltip="go to Stats">
+        <a routerLink="/stats">Stats</a>
+    </button>
 </nav>
+
+
+
 <router-outlet />

@@ -1,65 +1,56 @@
 import { Injectable } from '@angular/core';
-import Dexie from 'dexie';
-import { faFillDrip, faArrowsToCircle, faCircleChevronRight, faChevronCircleRight, faAt, faTrashCan, faTrashAlt, faTextHeight, faUserXmark, faUserTimes, faStethoscope, faMessage, faCommentAlt, faInfo, faDownLeftAndUpRightToCenter, faCompressAlt, faExplosion, faFileLines, faFileAlt, faFileText, faWaveSquare, faRing, faBuildingUn, faDiceThree, faCalendarDays, faCalendarAlt, faAnchorCircleCheck, faBuildingCircleArrowRight, faVolleyball, faVolleyballBall, faArrowsUpToLine, faSortDown, faSortDesc, faCircleMinus, faMinusCircle, faDoorOpen, faRightFromBracket, faSignOutAlt, faAtom, faSoap, faIcons, faHeartMusicCameraBolt, faMicrophoneLinesSlash, faMicrophoneAltSlash, faBridgeCircleCheck, faPumpMedical, faFingerprint, faHandPointRight, faMagnifyingGlassLocation, faSearchLocation, faForwardStep, faStepForward, faFaceSmileBeam, faSmileBeam, faFlagCheckered, faFootball, faFootballBall, faSchoolCircleExclamation, faCrop, faAnglesDown, faAngleDoubleDown, faUsersRectangle, faPeopleRoof, faPeopleLine, faBeerMugEmpty, faBeer, faDiagramPredecessor, faArrowUpLong, faLongArrowUp, faFireFlameSimple, faBurn, faPerson, faMale, faLaptop, faFileCsv, faMenorah, faTruckPlane, faRecordVinyl, faFaceGrinStars, faGrinStars, faBong, faSpaghettiMonsterFlying, faPastafarianism, faArrowDownUpAcrossLine, faSpoon, faUtensilSpoon, faJarWheat, faEnvelopesBulk, faMailBulk, faFileCircleExclamation, faCircleH, faHospitalSymbol, faPager, faAddressBook, faContactBook, faStrikethrough, faK, faLandmarkFlag, faPencil, faPencilAlt, faBackward, faCaretRight, faComments, faPaste, faFileClipboard, faCodePullRequest, faClipboardList, faTruckRampBox, faTruckLoading, faUserCheck, faVialVirus, faSheetPlastic, faBlog, faUserNinja, faPersonArrowUpFromLine, faScrollTorah, faTorah, faBroomBall, faQuidditch, faQuidditchBroomBall, faToggleOff, faBoxArchive, faArchive, faPersonDrowning, faArrowDown91, faSortNumericDesc, faSortNumericDownAlt, faFaceGrinTongueSquint, faGrinTongueSquint, faSprayCan, faTruckMonster, faW, faEarthAfrica, faGlobeAfrica, faRainbow, faCircleNotch, faTabletScreenButton, faTabletAlt, faPaw, faCloud, faTrowelBricks, faFaceFlushed, faFlushed, faHospitalUser, faTentArrowLeftRight, faGavel, faLegal, faBinoculars, faMicrophoneSlash, faBoxTissue } from "@fortawesome/free-solid-svg-icons"
+import { Dexie } from 'dexie';
+import { Priority, WeekDays } from './utils.service';
 
-export const icons = [faFillDrip, faArrowsToCircle, faCircleChevronRight, faChevronCircleRight, faAt, faTrashCan, faTrashAlt, faTextHeight, faUserXmark, faUserTimes, faStethoscope, faMessage, faCommentAlt, faInfo, faDownLeftAndUpRightToCenter, faCompressAlt, faExplosion, faFileLines, faFileAlt, faFileText, faWaveSquare, faRing, faBuildingUn, faDiceThree, faCalendarDays, faCalendarAlt, faAnchorCircleCheck, faBuildingCircleArrowRight, faVolleyball, faVolleyballBall, faArrowsUpToLine, faSortDown, faSortDesc, faCircleMinus, faMinusCircle, faDoorOpen, faRightFromBracket, faSignOutAlt, faAtom, faSoap, faIcons, faHeartMusicCameraBolt, faMicrophoneLinesSlash, faMicrophoneAltSlash, faBridgeCircleCheck, faPumpMedical, faFingerprint, faHandPointRight, faMagnifyingGlassLocation, faSearchLocation, faForwardStep, faStepForward, faFaceSmileBeam, faSmileBeam, faFlagCheckered, faFootball, faFootballBall, faSchoolCircleExclamation, faCrop, faAnglesDown, faAngleDoubleDown, faUsersRectangle, faPeopleRoof, faPeopleLine, faBeerMugEmpty, faBeer, faDiagramPredecessor, faArrowUpLong, faLongArrowUp, faFireFlameSimple, faBurn, faPerson, faMale, faLaptop, faFileCsv, faMenorah, faTruckPlane, faRecordVinyl, faFaceGrinStars, faGrinStars, faBong, faSpaghettiMonsterFlying, faPastafarianism, faArrowDownUpAcrossLine, faSpoon, faUtensilSpoon, faJarWheat, faEnvelopesBulk, faMailBulk, faFileCircleExclamation, faCircleH, faHospitalSymbol, faPager, faAddressBook, faContactBook, faStrikethrough, faK, faLandmarkFlag, faPencil, faPencilAlt, faBackward, faCaretRight, faComments, faPaste, faFileClipboard, faCodePullRequest, faClipboardList, faTruckRampBox, faTruckLoading, faUserCheck, faVialVirus, faSheetPlastic, faBlog, faUserNinja, faPersonArrowUpFromLine, faScrollTorah, faTorah, faBroomBall, faQuidditch, faQuidditchBroomBall, faToggleOff, faBoxArchive, faArchive, faPersonDrowning, faArrowDown91, faSortNumericDesc, faSortNumericDownAlt, faFaceGrinTongueSquint, faGrinTongueSquint, faSprayCan, faTruckMonster, faW, faEarthAfrica, faGlobeAfrica, faRainbow, faCircleNotch, faTabletScreenButton, faTabletAlt, faPaw, faCloud, faTrowelBricks, faFaceFlushed, faFlushed, faHospitalUser, faTentArrowLeftRight, faGavel, faLegal, faBinoculars, faMicrophoneSlash, faBoxTissue];
+export const icons = ["format_color_fill", "zoom_out_map", "chevron_right", "alternate_email", "delete", "format_size", "person_remove", "medical_services", "message", "info", "fullscreen_exit", "explosion", "description", "waveform", "ring_volume", "domain_disabled", "casino", "calendar_today", "anchor", "business", "sports_volleyball", "vertical_align_top", "arrow_downward", "remove_circle", "door_open", "logout", "science", "soap", "widgets", "bolt", "mic_off", "bridge", "local_hospital", "fingerprint", "chevron_right", "place", "skip_next", "sentiment_very_satisfied", "flag", "sports_football", "school", "crop", "expand_more", "people", "sports_bar", "diagram", "arrow_upward", "whatshot", "person", "laptop", "grid_on", "candlestick_chart", "local_shipping", "album", "sentiment_satisfied_alt", "smoking_rooms", "restaurant_menu", "compare_arrows", "restaurant", "eco", "mail", "report", "local_hospital", "pager", "contacts", "strikethrough_s", "k", "flag", "edit", "skip_previous", "arrow_forward", "comment", "content_paste", "source_branch", "checklist", "local_shipping", "person_add_check", "science", "folder_special", "rss_feed", "person", "person_pin_circle", "scroll", "sports", "toggle_off", "archive", "person_pin", "sort", "mood", "color_lens", "offroad", "w", "public", "filter_hdr", "donut_large", "tablet", "pets", "cloud", "construction", "face", "local_hospital", "tent", "gavel", "visibility", "mic_off", "local_pharmacy"];
 
-export enum WeekDays {
-  Sunday,
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday
+export interface IHabitLog {
+  habitId: string;
+  day: number;
+  done?: number;
 }
 
-export class Todo {
-  title: string;
-  icon: number;
-  order: number;
-  points: number;
-  days: WeekDays[];
+export interface ITask {
   id: string;
-
-  constructor(title: string, icon: number, order: number, points: number, days: WeekDays[], id: string) {
-      this.title = title;
-      this.icon = icon;
-      this.order = order;
-      this.points = points;
-      this.days = days;
-      this.id = id;
-  }
+  title: string;
+  priority: Priority;
+  habitId?: string;
+  day?: number;
+  done?: number;
+  description?: string;
 }
 
-export class DailyTodo {
-  todoId: string;
-  day: WeekDays;
-  completed: boolean;
-
-  constructor(todoId: string, day: WeekDays, completed: boolean) {
-      this.todoId = todoId;
-      this.day = day;
-      this.completed = completed;
-  }
+export interface IHabit {
+  id: string;
+  title: string;
+  start: string;
+  end: string;
+  createdAt: Date;
+  points: number;
+  repeat: WeekDays[];
+  lastCheck: number;
+  icon: string;
+  description: string;
 }
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DbService extends Dexie {
-  todos: Dexie.Table<Todo, string>;
-  dailyTodo: Dexie.Table<DailyTodo, [number, string]>;
+  habits: Dexie.Table<IHabit, string>;
+  habitLogs: Dexie.Table<IHabitLog, [string, number]>;
+  tasks: Dexie.Table<ITask, string>;
 
   constructor() {
-      super('DB');
-      this.version(1).stores({
-          todos: 'id, title, icon, order, points, days',
-          dailyTodo: "[day+todoId], day, todoId, completed"
-      });
-      this.dailyTodo = this.table("dailyTodo")
-      this.todos = this.table("todos");
+    super('DB');
+    this.version(1).stores({
+      habits: 'id, title, start, end, points, createdAt, lastCheck, icon, description',
+      habitLogs: '[habitId+day], habitId, day, done',
+      tasks: 'id, title, priority, habitId, day, done, description'
+    });
+
+    this.habits = this.table('habits');
+    this.habitLogs = this.table('habitLogs');
+    this.tasks = this.table('tasks');
   }
 }
+
 

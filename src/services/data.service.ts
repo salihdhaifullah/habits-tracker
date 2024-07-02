@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { DailyTodo, DbService, Todo } from './db.service';
 import { UtilsService } from './utils.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 
 export class DataService {
   private db: DbService;
