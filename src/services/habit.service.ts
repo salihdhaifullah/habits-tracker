@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { ulid } from "ulid";
 import { Priority, UtilsService, WeekDays } from "../services/utils.service";
 import { DbService, IHabit } from "../services/db.service";
@@ -30,7 +29,6 @@ export interface ICreateTask {
 
 
 
-@Injectable({ providedIn: 'root' })
 export class HabitService {
   constructor(private db: DbService) { }
 

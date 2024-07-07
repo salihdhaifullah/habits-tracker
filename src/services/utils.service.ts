@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 export enum WeekDays {
   Sunday,
   Monday,
@@ -16,7 +14,6 @@ export enum Priority {
   high
 }
 
-@Injectable({ providedIn: 'root' })
 export class UtilsService {
   static weekDays: WeekDays[] = [
     WeekDays.Sunday,

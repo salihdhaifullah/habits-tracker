@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Dexie } from 'dexie';
 import { Priority, WeekDays } from './utils.service';
 
@@ -33,7 +32,6 @@ export interface IHabit {
   description: string;
 }
 
-@Injectable({ providedIn: 'root' })
 export class DbService extends Dexie {
   habits: Dexie.Table<IHabit, string>;
   habitLogs: Dexie.Table<IHabitLog, [string, number]>;
