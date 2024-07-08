@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mdi/js": "^7.4.47",
     "dexie": "^4.0.7",
     "ulid": "^2.3.0",
     "vue": "^3.4.29",

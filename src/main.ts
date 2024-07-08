@@ -2,9 +2,12 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from './router';
+import rippleDirective from './directives/v-ripple';
+import './directives/ripple.css';
 
 createApp(App)
 .use(router)
+.directive('ripple', rippleDirective)
 .mount('#app')
 
 if ('serviceWorker' in navigator && window.location.hostname !== "localhost") {

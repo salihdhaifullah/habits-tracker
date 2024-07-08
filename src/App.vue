@@ -4,9 +4,9 @@ import Header from "./components/Header.vue"
 </script>
 
 <template>
-  <Header />
-  <main id="app">
+  <main id="app" class="min-h-screen bg-background">
+    <Header />
     <router-view />
+    <Footer />
   </main>
-  <Footer />
 </template>
