@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import Icon from './Icon.vue';
+import context from '../context';
 
-const props = defineProps({
-    modelValue: {
-        type: Boolean,
-        default: false
-    }
-});
-
-const emit = defineEmits(['update:modelValue']);
+const props = defineProps<{isOpen: boolean, closeSheet: () => void}>();
 
 const touchStartY = ref(0);
 const touchCurrentY = ref(0);
 const isDragging = ref(false);
+const bottomSheetContainer: Ref<HTMLDivElement | null> = ref(null);
 
 const startDrag = (event: TouchEvent) => {
     touchStartY.value = event.touches[0].clientY;
@@ -24,40 +19,42 @@ const onDrag = (event: TouchEvent) => {
     if (!isDragging.value) return;
     touchCurrentY.value = event.touches[0].clientY;
     const translateY = Math.max(0, touchCurrentY.value - touchStartY.value);
-    const sheet = document.querySelector('.transform') as HTMLElement;
-    sheet.style.transform = `translateY(${translateY}px)`;
+    bottomSheetContainer.value!.style.transform = `translateY(${translateY}px)`;
 };
 
 const endDrag = () => {
     isDragging.value = false;
     const translateY = touchCurrentY.value - touchStartY.value;
     if (translateY > 100) {
-        closeSheet();
+        props.closeSheet();
+        bottomSheetContainer.value!.style.transform = ``;
     } else {
-        const sheet = document.querySelector('.transform') as HTMLElement;
-        sheet.style.transform = `translateY(0)`;
+        bottomSheetContainer.value!.style.transform = `translateY(0)`;
     }
 };
 
-const closeSheet = () => {
-    emit('update:modelValue', false);
-};
 </script>
 
 <template>
-    <div class="fixed inset-0 z-50 flex flex-col w-full bg-surface h-screen rounded-t-3xl overflow-hidden transform transition-transform duration-300"
-        :class="{ 'translate-y-full': !props.modelValue }" @touchstart="startDrag" @touchmove="onDrag"
-        @touchend="endDrag">
-        <div class="p-4 flex justify-between w-full">
-            <button @click="closeSheet" class="text-text-secondary">
-                <Icon>close</Icon>
-            </button>
-            <button @click="closeSheet" class="text-text-secondary">
-                <Icon>horizontal_rule</Icon>
+    <div ref="bottomSheetContainer"
+        class="fixed inset-0 top-[20vh] z-50 flex flex-col w-full bg-light-surfaceVariant h-[80vh] rounded-t-3xl overflow-y-auto transform shadow-lg-elevated"
+        :class="{ 'transition-transform duration-300': !isDragging, 'translate-y-full': !props.isOpen }">
+        <div class="p-4 flex flex-row items-center w-full"
+            :class="{ 'justify-center': context.isTouchDevice, 'justify-end': !context.isTouchDevice }" 
+            @touchend="endDrag" @touchstart="startDrag" @touchmove="onDrag">
+            <div v-if="context.isTouchDevice" class="text-light-onSurfaceVariant text-4xl cursor-grab">
+                <Icon size="4xl">horizontal_rule</Icon>
+            </div>
+
+            <button v-if="!context.isTouchDevice" @click="props.closeSheet" class="text-light-onSurfaceVariant text-4xl">
+                <Icon size="4xl">close</Icon>
             </button>
         </div>
         <div class="p-4">
             <slot></slot>
         </div>
     </div>
+
+    <div @click="props.closeSheet" class="fixed inset-0 w-full h-screen bg-light-scrim bg-opacity-50 z-10 transform transition-transform duration-300"
+        :class="{ 'translate-y-full': !props.isOpen }"></div>
 </template>

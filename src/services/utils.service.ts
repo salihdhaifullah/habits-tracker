@@ -34,4 +34,8 @@ export class UtilsService {
   static getWeekDay() {
     return this.weekDays[(new Date()).getDay()]
   }
+
+  static isTouchDevice(): boolean {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
 }

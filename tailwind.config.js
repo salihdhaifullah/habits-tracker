@@ -8,36 +8,82 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#F44336', // Primary red (500): Used for the main elements like headers, primary buttons, and active elements.
-          light: '#FFCDD2',   // Light red (100): Used for lighter shades of primary elements, background highlights, or hover effects.
-          dark: '#D32F2F',    // Dark red (700): Used for darker shades of primary elements, focus states, or active states.
-        },
-        secondary: {
-          DEFAULT: '#2196F3', // Secondary blue (500): Used for secondary elements like secondary buttons, links, or other secondary actions.
-          light: '#BBDEFB',   // Light blue (100): Used for lighter shades of secondary elements, background highlights, or hover effects.
-          dark: '#1976D2',    // Dark blue (700): Used for darker shades of secondary elements, focus states, or active states.
-        },
-        accent: {
-          yellow: '#FFFF00',  // Accent yellow (A200): Used for accent elements like highlights, badges, or small details.
-          green: '#00E676',   // Accent green (A400): Used for accent elements like highlights, success messages, or small details.
-        },
-        text: {
-          primary: '#212121', // Primary text color: Used for main text elements to ensure good readability.
-          secondary: '#757575', // Secondary text color: Used for secondary text elements like subtitles or less important text.
-          dark: {
-            primary: '#FFFFFF', // Primary text color (dark mode): Used for main text elements in dark mode to ensure good readability.
-            secondary: '#B0BEC5', // Secondary text color (dark mode): Used for secondary text elements in dark mode like subtitles or less important text.
-          }
-        },
-        background: {
-          DEFAULT: '#FFFFFF', // Background color: Used for the main background color of the site.
-          dark: '#121212',    // Background color (dark mode): Used for the main background color in dark mode.
-        },
-        surface: {
-          DEFAULT: '#FAFAFA',    // Surface color: Used for card backgrounds, containers, or any other surface elements.
-          dark: '#1E1E1E', // Surface color (dark mode): Used for card backgrounds, containers, or any other surface elements in dark mode.
-        },
+          "dark": {
+            "background": "#1A1110",
+            "error": "#FFB4AB",
+            "errorContainer": "#93000A",
+            "inverseOnSurface": "#392E2C",
+            "inversePrimary": "#904A42",
+            "inverseSurface": "#F1DEDC",
+            "onBackground": "#F1DEDC",
+            "onError": "#690005",
+            "onErrorContainer": "#FFDAD6",
+            "onPrimary": "#561E18",
+            "onPrimaryContainer": "#FFDAD5",
+            "onSecondary": "#442926",
+            "onSecondaryContainer": "#FFDAD5",
+            "onSurface": "#F1DEDC",
+            "onSurfaceVariant": "#D8C2BE",
+            "onTertiary": "#3E2E04",
+            "onTertiaryContainer": "#FCDFA6",
+            "outline": "#A08C89",
+            "outlineVariant": "#534341",
+            "primary": "#FFB4A9",
+            "scrim": "#000000",
+            "primaryContainer": "#73342C",
+            "secondary": "#E7BDB7",
+            "secondaryContainer": "#5D3F3B",
+            "surface": "#1A1110",
+            "surfaceBright": "#423735",
+            "surfaceContainer": "#271D1C",
+            "surfaceContainerHigh": "#322826",
+            "surfaceContainerHighest": "#3D3231",
+            "surfaceContainerLow": "#231918",
+            "surfaceContainerLowest": "#140C0B",
+            "surfaceDim": "#1A1110",
+            "surfaceTint": "#FFB4A9",
+            "surfaceVariant": "#534341",
+            "tertiary": "#DFC38C",
+            "tertiaryContainer": "#574419",
+          },
+          "light": {
+            "background": "#FFF8F7",
+            "error": "#BA1A1A",
+            "errorContainer": "#FFDAD6",
+            "inverseOnSurface": "#FFEDEA",
+            "inversePrimary": "#FFB4A9",
+            "inverseSurface": "#392E2C",
+            "onBackground": "#231918",
+            "onError": "#FFFFFF",
+            "onErrorContainer": "#410002",
+            "onPrimary": "#FFFFFF",
+            "onPrimaryContainer": "#3B0906",
+            "onSecondary": "#FFFFFF",
+            "onSecondaryContainer": "#2C1512",
+            "onSurface": "#231918",
+            "onSurfaceVariant": "#534341",
+            "onTertiary": "#FFFFFF",
+            "onTertiaryContainer": "#261A00",
+            "outline": "#857370",
+            "outlineVariant": "#D8C2BE",
+            "primary": "#904A42",
+            "scrim": "#000000",
+            "primaryContainer": "#FFDAD5",
+            "secondary": "#775652",
+            "secondaryContainer": "#FFDAD5",
+            "surface": "#FFF8F7",
+            "surfaceBright": "#FFF8F7",
+            "surfaceContainer": "#FCEAE7",
+            "surfaceContainerHigh": "#F7E4E1",
+            "surfaceContainerHighest": "#F1DEDC",
+            "surfaceContainerLow": "#FFF0EE",
+            "surfaceContainerLowest": "#FFFFFF",
+            "surfaceDim": "#E8D6D3",
+            "surfaceTint": "#904A42",
+            "surfaceVariant": "#F5DDDA",
+            "tertiary": "#705C2E",
+            "tertiaryContainer": "#FCDFA6"
+        }        
       },
       boxShadow: {
         'sm-elevated': '0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24)', // Small elevation
@@ -51,20 +97,4 @@ export default {
   }
 }
 
-      // /* 
-      // /* Shadow 1 */
-      // box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 
-      // 0px 1px 2px rgba(0, 0, 0, 0.24);
-      
-      // /* Shadow 2 */
-      // box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
-      
-      // /* Shadow 3 */
-      // box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);
-      
-      // /* Shadow 4 */
-      // box-shadow: 0px 14px 28px rgba(0, 0, 0, 0.25), 0px 10px 10px rgba(0, 0, 0, 0.22);
-      
-      // /* Shadow 5 */
-      // box-shadow: 0px 19px 38px rgba(0, 0, 0, 0.3), 0px 15px 12px rgba(0, 0, 0, 0.22);
-      //       */
+// #f44336 primary seed
