@@ -1,22 +1,29 @@
 const CACHE_NAME = 'habitup-cache-v1';
+
 const urlsToCache = [
     '/',
     '/index.html',
+    '/index.css',
+    '/index.js',
+    '/service-worker.js',
+    '/logo.svg',
     '/manifest.webmanifest',
-    '/icons/',
-    '/*.css',
-    '/*.js',
-    '/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)',
+    '/fonts/google-icons.woff2',
+    '/fonts/Roboto-Bold.ttf',
+    '/fonts/Roboto-Medium.ttf',
+    '/fonts/Roboto-Regular.ttf',
+    '/icons/favicon.ico',
+    '/icons/icon-144x144.png',
+    '/icons/icon-150x150.png',
+    '/icons/icon-192x192.png',
+    '/icons/icon-310x150.png',
+    '/icons/icon-310x310.png',
+    '/icons/icon-512x512.png',
+    '/icons/icon-70x70.png',
 ];
 
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Opened cache');
-                return cache.addAll(urlsToCache);
-            })
-    );
+    event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache)));
 });
 
 self.addEventListener('fetch', (event) => {
@@ -26,18 +33,5 @@ self.addEventListener('fetch', (event) => {
                 if (response) return response;
                 return fetch(event.request);
             })
-    );
-});
-
-self.addEventListener('activate', (event) => {
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) return caches.delete(cacheName);
-                })
-            );
-        })
-    );
+    )
 });

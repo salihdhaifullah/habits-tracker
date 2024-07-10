@@ -42,12 +42,12 @@ const endDrag = () => {
         <div class="p-4 flex flex-row items-center w-full"
             :class="{ 'justify-center': context.isTouchDevice, 'justify-end': !context.isTouchDevice }" 
             @touchend="endDrag" @touchstart="startDrag" @touchmove="onDrag">
-            <div v-if="context.isTouchDevice" class="text-light-onSurfaceVariant text-4xl cursor-grab">
-                <Icon size="4xl">horizontal_rule</Icon>
+            <div v-if="context.isTouchDevice" class="text-light-onSurfaceVariant cursor-grab">
+                <Icon class="text-4xl">horizontal_rule</Icon>
             </div>
 
-            <button v-if="!context.isTouchDevice" @click="props.closeSheet" class="text-light-onSurfaceVariant text-4xl">
-                <Icon size="4xl">close</Icon>
+            <button v-if="!context.isTouchDevice" @click="props.closeSheet" class="text-light-onSurfaceVariant">
+                <Icon class="text-4xl">close</Icon>
             </button>
         </div>
         <div class="p-4">

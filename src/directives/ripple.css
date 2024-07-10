@@ -6,7 +6,7 @@
   transform: scale(0);
   animation: ripple 600ms linear;
   z-index: 9999;
-  opacity: 0.16;
+  opacity: 0.26;
 }
 
 @keyframes ripple {

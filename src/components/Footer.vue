@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import BottomSheet from './BottomSheet.vue';
 import Icon from './Icon.vue';
 import CreateHabit from './CreateHabit.vue';
+import { RouterLink } from 'vue-router';
 
 interface Tab {
     name: string;
@@ -19,26 +20,27 @@ const tabs = ref<Tab[]>([
 
 const activeTab = ref<number>(0);
 const isOpen = ref(false);
-const closeSheet = () => {isOpen.value = false};
+const closeSheet = () => { isOpen.value = false };
 </script>
 
 <template>
-    <nav class="fixed bottom-0 w-full bg-light-surface shadow-2xl-elevated">
-        <div class="flex justify-evenly py-2 px-2 sm:px-6 lg:px-8 w-full">
-            <button v-ripple v-for="(tab, index) in tabs" :key="index" @click="activeTab = index"
-                :class="{ 'bg-light-primaryContainer text-light-onPrimaryContainer': activeTab === index, 'text-light-onSurface bg-light-surfaceDim': activeTab !== index }"
-                class="flex items-center justify-center py-2 focus:outline-none transition-colors duration-300 relative overflow-hidden w-40">
-                <Icon>{{ tab.icon }}</Icon>
-                <span class="ml-2">{{ tab.name }}</span>
-            </button>
-        </div>
-        <div @click="isOpen = true"
-            class="flex justify-center w-12 h-12 items-center text-center rounded-lg shadow-lg-elevated fixed bottom-20 right-4 bg-light-secondary text-light-onSecondary cursor-pointer">
-            <Icon size="3xl">add</Icon>
-        </div>
-    </nav>
-
-    <BottomSheet :is-open="isOpen" :close-sheet="closeSheet">
-        <CreateHabit />
-    </BottomSheet>
+    <footer class="fixed bottom-0 w-full">
+        <nav class="w-full bg-light-primaryContainer shadow-2xl-elevated relative">
+            <div class="flex justify-center xl:gap-40 md:gap-20 sm:gap-10 gap-4 w-full">
+                <RouterLink v-ripple v-for="(tab, index) in tabs" :key="index" @click="activeTab = index"
+                    :class="{ 'opacity-50': activeTab !== index, 'xl:mr-56 md:mr-36 sm:mr-26 mr-16': index === 1 }"
+                    :to="tab.link"
+                    class="flex text-light-onPrimaryContainer flex-col items-center justify-center focus:outline-none transition-colors duration-300 relative overflow-hidden w-28 p-2 md:text-base sm:text-sm text-xs">
+                    <Icon class="md:text-3xl sm:text-2xl text-lg">{{ tab.icon }}</Icon>
+                    <span>{{ tab.name }}</span>
+                </RouterLink>
+            </div>
+            <div @click="isOpen = true" class="flex justify-center md:w-12 md:h-12 w-10 h-10 items-center text-center rounded-lg shadow-lg-elevated absolute md:bottom-12 bottom-10 right-0 left-0 mx-auto bg-light-tertiaryContainer text-light-onTertiaryContainer cursor-pointer">
+                <Icon class="md:text-2xl text-lg">add</Icon>
+            </div>
+        </nav>
+        <BottomSheet :is-open="isOpen" :close-sheet="closeSheet">
+            <CreateHabit />
+        </BottomSheet>
+    </footer>
 </template>
