@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { UtilsService } from '../services/utils.service';
+import { icons } from '../services/db.service';
+import Icon from './Icon.vue';
+import { CreateHabit, ICreateHabit } from '../services/habit.service';
 
-const submit = (e: Event) => {
-    console.log(e)
-    console.log(formData)
-}
-
-const formData = ref({
+const props = defineProps<{closeSheet: () => void}>();
+const defaultData = {
     title: '',
     start: '',
     end: '',
@@ -14,15 +14,21 @@ const formData = ref({
     repeat: [],
     icon: '',
     description: '',
-})
+}
 
-const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const icons = ['icon1', 'icon2', 'icon3'];
+const submit = async () => {
+    await CreateHabit(JSON.parse(JSON.stringify(formData.value)));
+    props.closeSheet();
+    console.log(defaultData)
+    formData.value = JSON.parse(JSON.stringify(defaultData));
+}
+
+const formData = ref<ICreateHabit>(JSON.parse(JSON.stringify(defaultData)))
 </script>
 
 <template>
     <div class="container mx-auto p-4">
-        <form @submit.prevent="submit" class="space-y-4">
+        <form @submit.prevent="submit" class="space-y-2">
             <!-- Title -->
             <div>
                 <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
@@ -58,25 +64,27 @@ const icons = ['icon1', 'icon2', 'icon3'];
             <!-- Repeat (Multi-select) -->
             <div>
                 <label for="repeat" class="block text-sm font-medium text-gray-700">Repeat</label>
-                <select v-model="formData.repeat" id="repeat" multiple
+                <select v-model="formData.repeat" id="repeat" multiple required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option v-for="day in weekDays" :key="day" :value="day">{{ day }}</option>
+                    <option v-for="day in UtilsService.weekDays" :key="day" :value="day">{{ day.toString() }}</option>
                 </select>
             </div>
 
             <!-- Icon -->
             <div>
                 <label for="icon" class="block text-sm font-medium text-gray-700">Icon</label>
-                <select v-model="formData.icon" id="icon"
+                <select v-model="formData.icon" id="icon" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option v-for="icon in icons" :key="icon" :value="icon">{{ icon }}</option>
+                    <option v-for="icon in icons" :key="icon" :value="icon">
+                        <Icon>{{ icon }}</Icon>
+                    </option>
                 </select>
             </div>
 
             <!-- Description -->
             <div>
                 <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                <textarea v-model="formData.description" id="description" rows="3"
+                <textarea v-model="formData.description" id="description" rows="3" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
             </div>
 

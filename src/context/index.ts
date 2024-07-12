@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
 import { UtilsService } from '../services/utils.service';
+import { InitHabitLogs } from '../services/habit.service';
 
 const context = reactive({
     isTouchDevice: UtilsService.isTouchDevice(),
@@ -11,6 +12,7 @@ const context = reactive({
         window.matchMedia("(pointer: coarse)").addEventListener('change', handleTouchChange);
     },
     init() {
+        InitHabitLogs()
         this.touchInit();
     }
 })

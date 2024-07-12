@@ -1,11 +1,11 @@
 export enum WeekDays {
-  Sunday,
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday
+  Sunday = "Sunday",
+  Monday = "Monday",
+  Tuesday = "Tuesday",
+  Wednesday = "Wednesday",
+  Thursday = "Thursday",
+  Friday = "Friday",
+  Saturday = "Saturday"
 }
 
 export enum Priority {
@@ -26,6 +26,10 @@ export class UtilsService {
   ]
 
   static getDaysSinceEpoch() {
+    // dose not work, i think it uses utc date 
+    // fix it
+    // its behind by 2 hours 
+    // new Date(0).getTime() is +2 remove it 
     const timeDifference = new Date().getTime() - new Date(0).getTime();
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return days;

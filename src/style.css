@@ -42,6 +42,7 @@
 }
 
 body {
+    @apply bg-light-background;
     font-family: 'Roboto';
 }
 

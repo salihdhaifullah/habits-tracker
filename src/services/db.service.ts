@@ -40,9 +40,9 @@ export class DbService extends Dexie {
   constructor() {
     super('DB');
     this.version(1).stores({
-      habits: 'id, title, start, end, points, createdAt, lastCheck, icon, description',
+      habits: 'id, &title, start, end, points, createdAt, lastCheck, icon, description',
       habitLogs: '[habitId+day], habitId, day, done',
-      tasks: 'id, title, priority, habitId, day, done, description'
+      tasks: 'id, &title, priority, habitId, day, done, description'
     });
 
     this.habits = this.table('habits');
@@ -51,4 +51,6 @@ export class DbService extends Dexie {
   }
 }
 
+const DB = new DbService();
 
+export default DB;

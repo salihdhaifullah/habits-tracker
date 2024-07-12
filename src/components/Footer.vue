@@ -40,7 +40,7 @@ const closeSheet = () => { isOpen.value = false };
             </div>
         </nav>
         <BottomSheet :is-open="isOpen" :close-sheet="closeSheet">
-            <CreateHabit />
+            <CreateHabit :close-sheet="closeSheet"/>
         </BottomSheet>
     </footer>
 </template>
