@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HabitsView from '../components/HabitsView.vue';
+import HabitsHomeView from '../components/HabitsHomeView.vue';
 </script>
 
 <template>
-    <HabitsView />
+    <HabitsHomeView />
 </template>

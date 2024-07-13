@@ -1,5 +1,5 @@
 import { ulid } from "ulid";
-import { Priority, UtilsService, WeekDays } from "../services/utils.service";
+import { CountType, Priority, UtilsService, WeekDays } from "../services/utils.service";
 import DB, { IHabit } from "../services/db.service";
 import { UpdateSpec } from 'dexie';
 
@@ -10,7 +10,6 @@ export interface ICreateHabit {
   points: number;
   repeat: WeekDays[];
   icon: string;
-  description: string;
 }
 
 export interface ICreateHabitLog {
@@ -21,13 +20,16 @@ export interface ICreateHabitLog {
 
 export interface ICreateTask {
   title: string;
+  repeat: WeekDays[];
+  priority: Priority;
+  count: number | null;
+  countType: CountType;
+  icon: string;
+  isMin: boolean; // is the count going to the limit or above good, good = true, bad = false  
   habitId?: string;
   day?: number;
-  priority: Priority;
   description?: string;
 }
-
-
 
 export async function CreateHabit(args: ICreateHabit) {
   const id = ulid()
@@ -52,8 +54,7 @@ export async function CreateHabitLog(args: ICreateHabitLog) {
 
 export async function GetHabitsWhereLastCheckNotEqualToToday() {
   const today = UtilsService.getDaysSinceEpoch();
-  const todayWeekDay = UtilsService.getWeekDay();
-  const data = await DB.habits.filter(h => h.lastCheck !== today && h.repeat.includes(todayWeekDay)).toArray();
+  const data = await DB.habits.filter(h => h.lastCheck !== today).toArray();
   const toUpdate: { key: string, changes: UpdateSpec<IHabit> }[] = [];
   
   for (let i = 0; i < data.length; i++) {
@@ -78,10 +79,16 @@ export async function CreateTask(args: ICreateTask) {
 export async function InitHabitLogs() {
   const data = await GetHabitsWhereLastCheckNotEqualToToday();
   const today = UtilsService.getDaysSinceEpoch();
-  const toCreate: ICreateHabitLog[] = []
+  const toCreate: ICreateHabitLog[] = [];
+
   for (let i = 0; i < data.length; i++) {
-    toCreate.push({ day: today, habitId: data[i].id })
+    const item = data[i]
+    for (let j = item.lastCheck+1; j <= today; j++) {
+      const currentWeekDay = UtilsService.getWeekDayByDate(new Date(UtilsService.dayInMs*j));
+      if (item.repeat.includes(currentWeekDay)) toCreate.push({ day: j, habitId: item.id });
+    }
   }
+
   await DB.habitLogs.bulkAdd(toCreate);
 }
 

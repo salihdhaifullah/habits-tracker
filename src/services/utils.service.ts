@@ -14,6 +14,13 @@ export enum Priority {
   high
 }
 
+export enum CountType {
+  bool, // 0, 1
+  time, // in second like 300s for 5 minuets
+  count, // number like do 100 push ups 
+}
+
+
 export class UtilsService {
   static weekDays: WeekDays[] = [
     WeekDays.Sunday,
@@ -25,14 +32,14 @@ export class UtilsService {
     WeekDays.Saturday
   ]
 
+  static dayInMs = 24 * 60 * 60 * 1000;
+
   static getDaysSinceEpoch() {
-    // dose not work, i think it uses utc date 
-    // fix it
-    // its behind by 2 hours 
-    // new Date(0).getTime() is +2 remove it 
-    const timeDifference = new Date().getTime() - new Date(0).getTime();
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    return days;
+    return Math.floor((new Date().getTime()) / this.dayInMs);
+  }
+
+  static getWeekDayByDate(date: Date) {
+    return this.weekDays[date.getDay()]    
   }
 
   static getWeekDay() {

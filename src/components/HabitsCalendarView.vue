@@ -3,7 +3,9 @@ import { onMounted, ref } from 'vue';
 import { getTodayHabits } from '../services/habit.service';
 import { IHabit, IHabitLog } from '../services/db.service';
 
-const data = ref<(IHabitLog & IHabit)[]>()
+export type HabitType = IHabit & IHabitLog
+
+const data = ref<HabitType[]>([])
 const data_mins = ref<string[]>()
 
 onMounted(async () => {
@@ -38,7 +40,7 @@ function getHight(ele: IHabitLog & IHabit) {
         <div
             class="bg-light-tertiaryContainer flex h-[2464px] rounded-lg flex-col p-6 sm:w-[500px] w-96 shadow-xl-elevated relative">
             <div v-for="(num, index) in data_mins" :key="index"
-                class="h-[100px] w-full text-light-inverseSurface text-start flex flex-row justify-center items-center gap-1 z-50">
+                class="h-[100px] w-full text-light-inverseSurface text-start flex flex-row justify-center items-center gap-1 z-1">
                 <span>{{ num }}</span>
                 <span class="bg-light-onTertiaryContainer h-px w-full flex"></span>
             </div>

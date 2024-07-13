@@ -6,14 +6,13 @@ import Icon from './Icon.vue';
 import { CreateHabit, ICreateHabit } from '../services/habit.service';
 
 const props = defineProps<{closeSheet: () => void}>();
-const defaultData = {
+const defaultData: ICreateHabit = {
     title: '',
     start: '',
     end: '',
     points: 1,
     repeat: [],
-    icon: '',
-    description: '',
+    icon: ''
 }
 
 const submit = async () => {
@@ -79,13 +78,6 @@ const formData = ref<ICreateHabit>(JSON.parse(JSON.stringify(defaultData)))
                         <Icon>{{ icon }}</Icon>
                     </option>
                 </select>
-            </div>
-
-            <!-- Description -->
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                <textarea v-model="formData.description" id="description" rows="3" required
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
             </div>
 
             <!-- Submit Button -->

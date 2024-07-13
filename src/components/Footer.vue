@@ -15,7 +15,7 @@ const tabs = ref<Tab[]>([
     { name: 'Home', icon: "home", link: "/" },
     { name: 'Tasks', icon: "checklist", link: "/tasks" },
     { name: 'Dashboard', icon: "bar_chart_4_bars", link: "/dashboard" },
-    { name: 'Settings', icon: "settings", link: "/Settings" },
+    { name: 'Calendar', icon: "today", link: "/calendar" },
 ]);
 
 const activeTab = ref<number>(0);
