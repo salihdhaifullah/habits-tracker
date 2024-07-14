@@ -39,7 +39,7 @@ export class UtilsService {
   }
 
   static getWeekDayByDate(date: Date) {
-    return this.weekDays[date.getDay()]    
+    return this.weekDays[date.getDay()]
   }
 
   static getWeekDay() {
@@ -48,5 +48,10 @@ export class UtilsService {
 
   static isTouchDevice(): boolean {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
+
+  static TimeToMinuets(time: string): number {
+    const parts = time.split(":")
+    return (Number(parts[0]) * 60) + Number(parts[1])
   }
 }
