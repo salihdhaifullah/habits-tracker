@@ -1,14 +1,7 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import react from '@vitejs/plugin-react-swc'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-  build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: 'index.js',
-        assetFileNames: 'index.css'
-      }
-    }
-  }
+  plugins: [react()],
 })
