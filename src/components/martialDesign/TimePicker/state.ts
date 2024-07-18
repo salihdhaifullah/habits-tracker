@@ -11,22 +11,22 @@ export enum Type {
 }
 
 const context = reactive({
-    hours: 12,
-    minutes: 0,
+    hours: "12",
+    minutes: "00",
     period: Periods.PM,
     type: Type.hours,
     hoursOptions: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-    minutesOptions: ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
+    minutesOptions: ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45"," 50", "55"],
     
     setType(n: Type) {
         this.type = n;
     },
 
-    setHours(n: number) {
+    setHours(n: string) {
         this.hours = n;
     },
 
-    setMinutes(n: number) {
+    setMinutes(n: string) {
         this.minutes = n;
     },
 

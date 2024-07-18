@@ -57,3 +57,14 @@ body {
 ::-webkit-scrollbar-thumb {
     @apply bg-light-surface rounded-lg;
 }
+
+
+input {
+    outline-style: none;
+}
+
+input:focus {
+    outline-style: solid;
+    outline-width: 2px;
+}
+
