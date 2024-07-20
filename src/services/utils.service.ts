@@ -21,6 +21,10 @@ export enum CountType {
 }
 
 
+export function NotFalsy(x: any): boolean {
+  return x !== null && x !== undefined;
+} 
+
 export class UtilsService {
   static weekDays: WeekDays[] = [
     WeekDays.Sunday,
