@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { ulid } from 'ulid';
-import Modal from '../Modal/Modal.vue';
+import Modal from '../Modal.vue';
 import Clock from './Clock.vue';
 import NumberClock from './NumberClock.vue';
 import context from './state';
