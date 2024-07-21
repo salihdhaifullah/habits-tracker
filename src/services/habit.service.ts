@@ -1,7 +1,8 @@
 import { ulid } from "ulid";
 import { CountType, Priority, UtilsService, WeekDays } from "../services/utils.service";
-import DB, { IHabit } from "../services/db.service";
+import DB, { IHabit, IHabitLog } from "../services/db.service";
 import { UpdateSpec } from 'dexie';
+import context from "../context";
 
 export interface ICreateHabit {
   title: string;
@@ -38,7 +39,7 @@ export async function CreateHabit(args: ICreateHabit) {
 
   try {
     await DB.habits.add({ ...args, id, createdAt, lastCheck });
-    await InitHabitLogs()
+    await context.loadData();
   } catch (error) {
     console.log(error)
   }
@@ -46,7 +47,7 @@ export async function CreateHabit(args: ICreateHabit) {
 
 export async function CreateHabitLog(args: ICreateHabitLog) {
   try {
-    await DB.habitLogs.add(args)
+    await DB.habitLogs.add({...args, done: null, countSeconds: 0})
   } catch (error) {
     console.log(error)
   }
@@ -79,13 +80,13 @@ export async function CreateTask(args: ICreateTask) {
 export async function InitHabitLogs() {
   const data = await GetHabitsWhereLastCheckNotEqualToToday();
   const today = UtilsService.getDaysSinceEpoch();
-  const toCreate: ICreateHabitLog[] = [];
+  const toCreate: IHabitLog[] = [];
 
   for (let i = 0; i < data.length; i++) {
     const item = data[i]
     for (let j = item.lastCheck+1; j <= today; j++) {
       const currentWeekDay = UtilsService.getWeekDayByDate(new Date(UtilsService.dayInMs*j));
-      if (item.repeat.includes(currentWeekDay)) toCreate.push({ day: j, habitId: item.id });
+      if (item.repeat.includes(currentWeekDay)) toCreate.push({ day: j, habitId: item.id, done: null, countSeconds: 0 });
     }
   }
 

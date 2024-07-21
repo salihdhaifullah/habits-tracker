@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { getTodayHabits } from '../services/habit.service';
-import { IHabit, IHabitLog } from '../services/db.service';
+import context from '../context';
+import { DailyHabit } from '../types';
 
-export type HabitType = IHabit & IHabitLog
-
-const data = ref<HabitType[]>([])
 const data_mins = ref<string[]>()
 
-onMounted(async () => {
-    data.value = await getTodayHabits()
-    console.log(data.value)
-
+onMounted(() => {
     const dump = [];
     for (let i = 1; i <= 24; i++) {
         dump.push((i < 10 ? ("0" + i.toString()) : i.toString()) + ":" + "00")
@@ -21,17 +15,13 @@ onMounted(async () => {
 })
 
 
-function getTop(ele: IHabitLog & IHabit) {
+function getTop(ele: DailyHabit) {
     return ((Number(ele.start.split(":")[0]) * 100) + "px")
 }
 
-function getHight(ele: IHabitLog & IHabit) {
-
+function getHight(ele: DailyHabit) {
     return ((Number(ele.start.split(":")[0]) * 100) + "px")
 }
-
-// const FIVE_MINUETS_HIGHT_MIN = 20;
-// const TOTAL_HIGHT = 5760;
 </script>
 
 
@@ -44,7 +34,7 @@ function getHight(ele: IHabitLog & IHabit) {
                 <span>{{ num }}</span>
                 <span class="bg-light-onTertiaryContainer h-px w-full flex"></span>
             </div>
-            <div v-for="(ele, index) in data" :key="index"
+            <div v-for="(ele, index) in context.todayHabitLogs" :key="index"
                 class="w-[calc(100%-92px)] text-light-inverseSurface bg-light-primaryContainer flex flex-col absolute right-[24px] p-2 shadow-md-elevated rounded-md"
                 :style="{ top: getTop(ele), height: getHight(ele) }">
                 <span>{{ ele.title }}</span>

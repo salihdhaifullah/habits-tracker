@@ -1,16 +1,16 @@
 <template>
-    <div v-for="n in context.minutesOptions" :key="n"
-        :style="{ transform: `rotate(${Number(n) * 6}deg) translate(0, -135px)` }"
-        class="absolute inset-[calc(50%-16px)] w-8 h-8 z-50">
+  <div v-for="n in context.minutesOptions" :key="n"
+    :style="{ transform: `rotate(${Number(n) * 6}deg) translate(0, -135px)` }"
+    class="absolute inset-[calc(50%-16px)] w-8 h-8 z-50">
 
-        <span v-ripple :class="{ 'text-light-onPrimary': context.minutes === n }"
-            class="absolute w-8 h-8 justify-center items-center flex rounded-full transition-all"
-            @click="context.minutes = n" :style="{ transform: `rotate(${Number(n) * -6}deg)` }">
-            <span>{{ n }}</span>
-        </span>
-    </div>
+    <span v-ripple :class="{ 'text-light-onPrimary': context.minutes === n }"
+      class="absolute w-8 h-8 justify-center items-center flex rounded-full transition-all" @click="context.minutes = n"
+      :style="{ transform: `rotate(${Number(n) * -6}deg)` }">
+      <span>{{ n }}</span>
+    </span>
+  </div>
 
-    <div class="flex w-full h-full justify-center items-center">
+  <div class="flex w-full h-full justify-center items-center">
     <div :style="{ transform: `rotate(${(Number(context.minutes) * 6) + 270}deg)` }">
       <div class="w-2 h-2 bg-light-primary rounded-full relative">
         <div

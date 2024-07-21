@@ -4,8 +4,8 @@
     class="absolute inset-[calc(50%-16px)] w-8 h-8 z-50">
 
     <span v-ripple :class="{ 'text-light-onPrimary': context.hours === n }"
-      class="absolute w-8 h-8 justify-center items-center flex rounded-full transition-all"
-      @click="context.hours = n" :style="{ transform: `rotate(${Number(n) * -30}deg)` }">
+      class="absolute w-8 h-8 justify-center items-center flex rounded-full transition-all" @click="context.hours = n"
+      :style="{ transform: `rotate(${Number(n) * -30}deg)` }">
       <span>{{ n }}</span>
     </span>
   </div>
@@ -20,7 +20,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script lang="ts" setup>

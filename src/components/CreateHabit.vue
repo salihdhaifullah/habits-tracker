@@ -2,8 +2,9 @@
 import { ref } from 'vue';
 import { UtilsService } from '../services/utils.service';
 import { icons } from '../services/db.service';
-import Icon from './Icon.vue';
+import Icon from './martialDesign/Icon.vue';
 import { CreateHabit, ICreateHabit } from '../services/habit.service';
+import TimePicker from './martialDesign/TimePicker/TimePicker.vue';
 
 const props = defineProps<{closeSheet: () => void}>();
 const defaultData: ICreateHabit = {
@@ -36,21 +37,9 @@ const formData = ref<ICreateHabit>(JSON.parse(JSON.stringify(defaultData)))
                     required />
             </div>
 
-            <!-- Start Time -->
-            <div>
-                <label for="start" class="block text-sm font-medium text-gray-700">Start Time</label>
-                <input type="time" v-model="formData.start" id="start"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    required />
-            </div>
+            <TimePicker @change="(v) => formData.start = v" :value="formData.start" :required="true" label="Start Time" />
 
-            <!-- End Time -->
-            <div>
-                <label for="end" class="block text-sm font-medium text-gray-700">End Time</label>
-                <input type="time" v-model="formData.end" id="end"
-                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    required />
-            </div>
+            <TimePicker @change="(v) => formData.end = v" :value="formData.end" :required="true" label="End Time" />
 
             <!-- Points -->
             <div>

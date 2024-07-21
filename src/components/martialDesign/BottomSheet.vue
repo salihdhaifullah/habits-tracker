@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
 import Icon from './Icon.vue';
-import context from '../context';
+import context from '../../context';
 
 const props = defineProps<{isOpen: boolean, closeSheet: () => void}>();
 

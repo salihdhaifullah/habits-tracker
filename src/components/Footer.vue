@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import BottomSheet from './BottomSheet.vue';
-import Icon from './Icon.vue';
+import BottomSheet from './martialDesign/BottomSheet.vue';
+import Icon from './martialDesign/Icon.vue';
 import CreateHabit from './CreateHabit.vue';
 import { RouterLink } from 'vue-router';
 

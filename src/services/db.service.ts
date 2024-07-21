@@ -6,6 +6,8 @@ export const icons = ["format_color_fill", "zoom_out_map", "chevron_right", "alt
 export interface IHabitLog {
   habitId: string;
   day: number;
+  done: boolean | null; // null pending 
+  countSeconds: number;
 }
 
 
@@ -44,7 +46,7 @@ export class DbService extends Dexie {
     super('DB');
     this.version(3).stores({
       habits: 'id, &title, start, end, points, createdAt, lastCheck, icon',
-      habitLogs: '[habitId+day], habitId, day, done',
+      habitLogs: '[habitId+day], habitId, day, done, countSeconds',
       tasks: 'id, &title, priority, countType, isMin, count, habitId, day, description, icon'
     });
 

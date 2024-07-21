@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { UtilsService } from '../services/utils.service';
-import { HabitType } from './HabitsCalendarView.vue';
-import Icon from './Icon.vue';
+import Icon from './martialDesign/Icon.vue';
 import CheckBox from './martialDesign/CheckBox.vue';
+import { DailyHabit } from '../types';
 
-const props = defineProps<HabitType>();
+const props = defineProps<DailyHabit>();
 const time = ref(UtilsService.TimeToMinuets(props.end) - UtilsService.TimeToMinuets(props.start))
-
 console.log(time)
 
 const checked = ref(false)
