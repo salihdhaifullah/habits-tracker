@@ -5,7 +5,7 @@ const props = defineProps<{ isOpen: boolean, handleClose: () => void }>()
 
 <template>
     <Teleport to="body">
-    <div class="fixed top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-50 flex flex-col h-fit w-fit shadow-lg-elevated transition-transform duration-300"
+    <div class="fixed top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 z-50 flex flex-col h-fit w-fit transition-transform duration-300"
         :class="{ '-translate-y-full top-0': !props.isOpen }">
         <slot v-if="props.isOpen"></slot>
     </div>

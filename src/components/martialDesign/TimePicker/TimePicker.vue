@@ -1,11 +1,21 @@
 <template>
     <Modal :is-open="context.isOpen" :handle-close="() => context.isOpen = false">
-        <div
-            class="flex flex-col w-fit p-4 bg-light-surfaceContainerHigh select-none gap-6 text-start rounded-lg shadow-md-elevated h-fit">
+        <div class="flex flex-col w-fit p-8 bg-light-surfaceContainerHigh select-none gap-6 text-start rounded-[30px] shadow-md-elevated h-fit">
             <h1 class="text-light-onSurfaceVariant text-xl">Enter time</h1>
             <div class="flex w-full justify-center items-center flex-col gap-16">
                 <NumberClock />
                 <Clock />
+            </div>
+
+            <div class="flex flex-row justify-between mt-4">
+                <div class="flex justify-center items-center">
+                    <IconButton :icon="context.isClock ? 'keyboard' : 'schedule'"/>
+                </div>
+
+                <div class="flex flex-row justify-center items-center gap-4">
+                    <TextButton label="Cancel" />
+                    <TextButton label="Ok" />
+                </div>
             </div>
         </div>
     </Modal>
@@ -24,6 +34,8 @@ import Modal from '../Modal.vue';
 import Clock from './Clock.vue';
 import NumberClock from './NumberClock.vue';
 import context from './state';
+import TextButton from '../Buttons/TextButton.vue';
+import IconButton from '../Buttons/ IconButton.vue';
 
 interface ITimePickerProps {
     label: string;

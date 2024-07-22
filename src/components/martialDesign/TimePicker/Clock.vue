@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-80 h-80 bg-white rounded-full shadow-lg">
+    <div class="relative w-80 h-80 bg-light-surfaceContainerHighest rounded-full">
         <HoursPicker v-if="context.type === Type.hours"/>
         <MinutesPicker v-else />
     </div>

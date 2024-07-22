@@ -4,7 +4,8 @@
   transform: scale(0);
   animation: ripple 600ms linear;
   z-index: 9999;
-  opacity: 0.26;
+  opacity: 0.1;
+  @apply bg-light-primary;
 }
 
 @keyframes ripple {

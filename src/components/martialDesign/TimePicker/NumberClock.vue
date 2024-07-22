@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row gap-4 justify-center items-center">
-    <div class="text-5xl gap-2 flex flex-row">
+  <div class="flex flex-row gap-4 justify-center items-center text-center">
+    <div class="text-5xl gap-2 flex flex-row h-full">
       <NumberFiled 
         :value="context.hours"
         @update-value="((v: number) => context.setHours(v))"
@@ -22,13 +22,13 @@
         />
     </div>
 
-    <div class="flex flex-col">
-      <button v-ripple class="rounded-t-lg px-4 py-2 -mb-px border-light-outline border"
+    <div class="flex flex-col h-full">
+      <button v-ripple class="rounded-t-lg px-4 py-2 -mb-px border-light-outline border h-full"
         :class="getButtonClass(Periods.AM)" @click="() => context.setPeriod(Periods.AM)">
         {{ Periods.AM }}
       </button>
 
-      <button v-ripple class="rounded-b-lg px-4 py-2 border-light-outline border" :class="getButtonClass(Periods.PM)"
+      <button v-ripple class="rounded-b-lg px-4 py-2 border-light-outline border h-full" :class="getButtonClass(Periods.PM)"
         @click="() => context.setPeriod(Periods.PM)">
         {{ Periods.PM }}
       </button>
