@@ -10,6 +10,7 @@ export default {
       colors: {
           "dark": {
             "background": "#1A1110",
+            "stateLayer": "rgba(255, 181, 169, 0.08)",
             "error": "#FFB4AB",
             "errorContainer": "#93000A",
             "inverseOnSurface": "#392E2C",
@@ -23,6 +24,7 @@ export default {
             "onSecondary": "#442926",
             "onSecondaryContainer": "#FFDAD5",
             "onSurface": "#F1DEDC",
+            "disabled": "rgba(241, 222, 220, 0.38)",
             "onSurfaceVariant": "#D8C2BE",
             "onTertiary": "#3E2E04",
             "onTertiaryContainer": "#FCDFA6",
@@ -48,6 +50,7 @@ export default {
           },
           "light": {
             "background": "#FFF8F7",
+            "stateLayer": "rgba(144, 74, 66, 0.08)",
             "error": "#BA1A1A",
             "errorContainer": "#FFDAD6",
             "inverseOnSurface": "#FFEDEA",
@@ -61,6 +64,7 @@ export default {
             "onSecondary": "#FFFFFF",
             "onSecondaryContainer": "#2C1512",
             "onSurface": "#231918",
+            "disabled": "rgba(35, 25, 24, 0.38)",
             "onSurfaceVariant": "#534341",
             "onTertiary": "#FFFFFF",
             "onTertiaryContainer": "#261A00",
